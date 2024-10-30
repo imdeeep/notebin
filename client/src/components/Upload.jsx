@@ -286,7 +286,7 @@ const Upload = ({ onUploadSuccess }) => {
                 setShowTagDropdown(true);
               }}
               placeholder="Search or create tags"
-              className="outline-none rounded px-3 py-2 w-full border border-primary"
+              className="outline-none rounded px-3 py-2 w-full border border-primary shadow-emerald-700/40 shadow-xl"
               onFocus={() => setShowTagDropdown(true)}
             />
             {showTagDropdown && tagSearchQuery && (
