@@ -11,7 +11,7 @@ import { BASE_URL } from '@/constants/data';
 import { ThreeDot } from 'react-loading-indicators';
 import { useSearchParams } from 'next/navigation';
 
-const Notes = () => {
+const PYQs = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
   const [filters, setFilters] = useState(initialFilters);
@@ -28,12 +28,13 @@ const Notes = () => {
     const fetchNotes = async () => {
       const token = Cookies.get('token');
       try {
-        const response = await axios.get(`${BASE_URL}api/v1/file/`, {
+        const response = await axios.get(`${BASE_URL}api/v1/pyq/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setNotes(response.data);
+        // console.log(response.data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -178,7 +179,11 @@ const Notes = () => {
         <div className="text-xs text-gray-500 space-y-1">
           <p>{note.user?.name}</p>
           <p>Subject: {note.subject}</p>
-          <p>Subject Code: {note.subjectcode}</p>
+          <p>Subject Code: {note.subjectCode}</p>
+          <div className='flex gap-4'>
+          <p>Unit: {note.unit}</p>
+          <p>Year: {note.year}</p>
+          </div>
           {note.tags && note.tags.length > 0 && (
             <div className="flex flex-wrap gap-1">
               <span>Tags:</span>
@@ -205,7 +210,7 @@ const Notes = () => {
       <main className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 pb-3 pt-3 items-center">
           <h1 className="text-2xl font-bold tracking-tight text-primary mb-4 sm:mb-0">
-            Explore Notes
+            Explore PYQs
           </h1>
 
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
@@ -357,7 +362,7 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default PYQs;
 
 const MobileFilterDialog = ({
   mobileFiltersOpen,

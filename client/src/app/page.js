@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { GoRocket } from 'react-icons/go';
-import { MdGroups } from 'react-icons/md';
-import { RiFolderSharedFill } from 'react-icons/ri';
+import { MdOutlineVerified } from 'react-icons/md';
+import { PiExamBold } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotes } from '../slices/notesSlice';
 import Navbar from '@/components/Navbar';
@@ -177,33 +177,35 @@ const Page = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-tertiary rounded flex flex-col gap-4 text-primary items-center justify-center p-6">
+            <MdOutlineVerified size={60} />
+            <Link
+              href="/notes?query=Verified"
+              className="mainf text-xl font-semibold"
+            >
+              Notes by Faculty
+            </Link>
+            <p className="text-center text-zinc-600 text-sm">
+              Access the verified notes by trusted faculty
+            </p>
+          </div>
+          <div className="bg-tertiary rounded flex flex-col gap-4 text-primary items-center justify-center p-6">
             <GoRocket size={60} />
             <Link href="/notes" className="mainf text-xl font-semibold">
               Find Notes
             </Link>
             <p className="text-center text-zinc-600 text-sm">
               Easily search and access a wide range of study materials for all
-              your courses.
+              your courses
             </p>
           </div>
           <div className="bg-tertiary rounded flex flex-col gap-4 text-primary items-center justify-center p-6">
-            <MdGroups size={70} />
-            <a href="#" className="mainf text-xl font-semibold">
-              Centralized Hub
-            </a>
-            <p className="text-center text-zinc-600 text-sm">
-              A single platform to manage and organize all your academic
-              resources efficiently.
-            </p>
-          </div>
-          <div className="bg-tertiary rounded flex flex-col gap-4 text-primary items-center justify-center p-6">
-            <RiFolderSharedFill size={60} />
-            <Link href="/uploadNotes" className="mainf text-xl font-semibold">
-              Upload Materials
+            <PiExamBold size={60} />
+            <Link href="/pyq" className="mainf text-xl font-semibold">
+              Find PYQs
             </Link>
             <p className="text-center text-zinc-600 text-sm">
-              Contribute to the community by sharing your notes and study
-              materials with others.
+              Easily search and access a wide range of study materials for all
+              including PYQs
             </p>
           </div>
         </div>

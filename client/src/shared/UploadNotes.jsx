@@ -8,6 +8,7 @@ import { FaCircleUser } from 'react-icons/fa6';
 import { IoLogOut } from 'react-icons/io5';
 import { MdHome, MdFileUpload, MdDelete, MdMenu } from 'react-icons/md';
 import { ThreeDot } from 'react-loading-indicators';
+import UploadPYQ from '@/components/UploadPYQ';
 
 import Footer from '@/components/Footer';
 import Upload from '@/components/Upload';
@@ -16,6 +17,7 @@ import { BASE_URL } from '@/constants/data';
 
 const UploadNotes = () => {
   const [showRequests, setShowRequests] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
   const [showUpload, setShowUpload] = useState(true);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,17 +37,22 @@ const UploadNotes = () => {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [isToggled]);
 
   const fetchNotes = async () => {
     setLoading(true);
     try {
       const token = jsCookie.get('token');
-      const response = await axios.get(`${BASE_URL}api/v1/file/userfiles`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        isToggled
+          ? `${BASE_URL}api/v1/pyq/userfiles`
+          : `${BASE_URL}api/v1/file/userfiles`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setNotes(response.data);
     } catch (error) {
       console.error('Error fetching notes:', error);
@@ -63,11 +70,16 @@ const UploadNotes = () => {
   const handleDelete = async (noteId) => {
     try {
       const token = jsCookie.get('token');
-      await axios.delete(`${BASE_URL}api/v1/file/delete/${noteId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        isToggled
+          ? `${BASE_URL}api/v1/pyq/delete/${noteId}`
+          : `${BASE_URL}api/v1/file/delete/${noteId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success('Note deleted successfully');
       fetchNotes();
     } catch (error) {
@@ -146,7 +158,7 @@ const UploadNotes = () => {
           {/* Notes List */}
           <div className="w-full lg:w-1/3 xl:w-1/4 mb-4 lg:mb-0 lg:mr-4">
             <h2 className="text-xl sm:text-2xl text-primary font-semibold mb-4">
-              All Notes
+              {isToggled ? 'All PYQs' : 'All Notes'}
             </h2>
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="max-h-[60vh] sm:max-h-[70vh] overflow-y-auto p-2 sm:p-4">
@@ -161,7 +173,9 @@ const UploadNotes = () => {
                     />
                   </div>
                 ) : notes.length === 0 ? (
-                  <p className="text-center">No notes found.</p>
+                  <p className="text-center">
+                    {isToggled ? 'No pyq found.' : 'No notes found.'}
+                  </p>
                 ) : (
                   notes.map((note) => (
                     <div
@@ -194,10 +208,29 @@ const UploadNotes = () => {
 
           {/* Upload or User Profile */}
           <div className="flex-1 bg-white rounded-lg shadow p-4">
+            <div className="flex items-center gap-1 justify-end">
+              <span className="text-sm">For PYQ</span>
+              <button
+                onClick={() => setIsToggled(!isToggled)}
+                className={`w-9 h-5 flex items-center rounded-full p-1 transition-colors duration-300 ${
+                  isToggled ? 'bg-secondary' : 'bg-gray-300'
+                }`}
+              >
+                <div
+                  className={`h-3 w-3 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+                    isToggled ? 'translate-x-4' : ''
+                  }`}
+                ></div>
+              </button>
+            </div>
             {showRequests ? (
               <UserProfile />
             ) : showUpload ? (
-              <Upload onUploadSuccess={fetchNotes} />
+              isToggled ? (
+                <UploadPYQ />
+              ) : (
+                <Upload onUploadSuccess={fetchNotes} />
+              )
             ) : null}
           </div>
         </main>
