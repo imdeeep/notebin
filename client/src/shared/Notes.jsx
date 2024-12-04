@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ChevronDownIcon, SearchIcon } from 'lucide-react';
@@ -10,20 +9,29 @@ import { MdVerified } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { BASE_URL } from '@/constants/data';
 import { ThreeDot } from 'react-loading-indicators';
-import { useSearchParams } from 'next/navigation';
+import queryString from 'query-string';
 
 const Notes = () => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query');
   const [filters, setFilters] = useState(notesFilters);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState(query ? query : 'Newest');
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState({});
+  const [sortOption, setSortOption] = useState('Newest');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const parsedParams = queryString.parse(window.location.search);
+      setSearchParams(parsedParams);
+      if (parsedParams.query) {
+        setSortOption(parsedParams.query);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchNotes = async () => {

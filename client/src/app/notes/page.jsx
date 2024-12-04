@@ -1,13 +1,9 @@
-import React,{ Suspense } from 'react';
+'use client';
 import Notes from '@/shared/Notes';
+import React from 'react';
 
 const page = () => {
-  return (
-  <Suspense fallback={<div>Loading...</div>}>
-   <Notes />;
-  </Suspense>
-  );
-
+  return <Notes />;
 };
 
 export default page;

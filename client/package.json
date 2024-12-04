@@ -19,6 +19,7 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.424.0",
     "next": "^15.0.3",
+    "query-string": "^9.1.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-circular-progressbar": "^2.1.0",

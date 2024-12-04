@@ -183,14 +183,14 @@ const PYQs = () => {
         </div>
         <div className="text-xs text-gray-500 space-y-1">
           <p>{note.user?.name}</p>
-          <div className='flex gap-2'>
-          <p>Subject: {note.subject}</p>
-          <p>Exam: {note.exam}</p>
+          <div className="flex gap-2">
+            <p>Subject: {note.subject}</p>
+            <p>Exam: {note.exam}</p>
           </div>
           <p>Subject Code: {note.subjectCode}</p>
-          <div className='flex gap-4'>
-          <p>Unit: {note.unit}</p>
-          <p>Year: {note.year}</p>
+          <div className="flex gap-4">
+            <p>Unit: {note.unit}</p>
+            <p>Year: {note.year}</p>
           </div>
           {note.tags && note.tags.length > 0 && (
             <div className="flex flex-wrap gap-1">

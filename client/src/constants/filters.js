@@ -39,15 +39,13 @@ export const pyqFilters = [
   {
     id: 'exam',
     name: 'Exam Type',
-    options:[
+    options: [
       { value: 'mst1', label: 'MST 1', checked: false },
       { value: 'mst2', label: 'MST 2', checked: false },
       { value: 'endsem', label: 'End Semester', checked: false },
-    ]
-  }
+    ],
+  },
 ];
-
-
 
 export const notesFilters = [
   {
@@ -88,4 +86,3 @@ export const notesFilters = [
     ],
   },
 ];
-
