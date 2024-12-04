@@ -9,14 +9,11 @@ import { MdVerified } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { BASE_URL } from '@/constants/data';
 import { ThreeDot } from 'react-loading-indicators';
-import { useSearchParams } from 'next/navigation';
 
 const PYQs = () => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query');
   const [filters, setFilters] = useState(pyqFilters);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState(query ? query : 'Newest');
+  const [sortOption, setSortOption] = useState('Newest');
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const [notes, setNotes] = useState([]);
