@@ -4,7 +4,7 @@ import { ChevronDownIcon, SearchIcon } from 'lucide-react';
 import Footer from '@/components/Footer';
 import { FaFilter } from 'react-icons/fa';
 import Navbar from '@/components/Navbar';
-import initialFilters from '@/constants/filters';
+import { notesFilters } from '@/constants/filters';
 import { MdVerified } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { BASE_URL } from '@/constants/data';
@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation';
 const Notes = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
-  const [filters, setFilters] = useState(initialFilters);
+  const [filters, setFilters] = useState(notesFilters);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState(query ? query : 'Newest');
   const [filteredNotes, setFilteredNotes] = useState([]);

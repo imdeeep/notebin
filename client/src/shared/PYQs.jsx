@@ -4,7 +4,7 @@ import { ChevronDownIcon, SearchIcon } from 'lucide-react';
 import Footer from '@/components/Footer';
 import { FaFilter } from 'react-icons/fa';
 import Navbar from '@/components/Navbar';
-import initialFilters from '@/constants/filters';
+import { pyqFilters } from '@/constants/filters';
 import { MdVerified } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { BASE_URL } from '@/constants/data';
@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation';
 const PYQs = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
-  const [filters, setFilters] = useState(initialFilters);
+  const [filters, setFilters] = useState(pyqFilters);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState(query ? query : 'Newest');
   const [filteredNotes, setFilteredNotes] = useState([]);
@@ -50,7 +50,9 @@ const PYQs = () => {
     const fieldsToSearch = [
       note.title,
       note.subject,
-      note.subjectcode,
+      note.subjectCode,
+      note.unit,
+      note.year,
       note.semester,
       note.user?.name,
       note.user?.enrollmentNo,
@@ -82,8 +84,11 @@ const PYQs = () => {
           if (filter.id === 'semester') {
             return checkedOptions.includes(note.semester.toLowerCase());
           }
-          if (filter.id === 'subject') {
-            return checkedOptions.includes(note.subject.toLowerCase());
+          if (filter.id === 'subjectcode') {
+            return checkedOptions.includes(note.subjectCode.toLowerCase());
+          }
+          if (filter.id === 'exam') {
+            return checkedOptions.includes(note.exam.toLowerCase());
           }
           // Add more specific filter conditions as needed
           return checkedOptions.includes(note[filter.id]?.toLowerCase());
@@ -178,7 +183,10 @@ const PYQs = () => {
         </div>
         <div className="text-xs text-gray-500 space-y-1">
           <p>{note.user?.name}</p>
+          <div className='flex gap-2'>
           <p>Subject: {note.subject}</p>
+          <p>Exam: {note.exam}</p>
+          </div>
           <p>Subject Code: {note.subjectCode}</p>
           <div className='flex gap-4'>
           <p>Unit: {note.unit}</p>
@@ -217,7 +225,7 @@ const PYQs = () => {
             <div className="relative w-full sm:w-auto">
               <input
                 type="text"
-                placeholder="Search notes, subjects, tags..."
+                placeholder="Search pyq, subjects, tags..."
                 className="w-full sm:w-auto pl-10 pr-4 py-2 border rounded-md outline-none border-gray-300"
                 value={searchTerm}
                 onChange={handleSearch}
@@ -339,7 +347,7 @@ const PYQs = () => {
                 </div>
               ) : filteredNotes.length === 0 ? (
                 <div className="text-center text-gray-500 py-8">
-                  No notes found matching your criteria
+                  No pyqs found matching your criteria
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
