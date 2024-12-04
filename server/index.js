@@ -7,6 +7,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const logRoutes = require('./routes/logRoutes');  
+const pyqRoutes = require('./routes/pyqRoutes');
 
 const port = process.env.PORT || 3000;
 const FrontendURL = process.env.FRONTEND_URL;
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/user', userRoutes); 
 app.use('/api/v1/file', fileRoutes);
+app.use('/api/v1/pyq', pyqRoutes);
 app.use('/api/v1/log', logRoutes);
 
 app.listen(port, () => {

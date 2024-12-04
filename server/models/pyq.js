@@ -5,11 +5,15 @@ const pyqSchema = new mongoose.Schema(
   {
     filename: { 
       type: String, 
-      required: true 
+      // required: true 
     },
     fileUrl: { 
       type: String, 
       required: true 
+    },
+    title:{
+      type: String,
+      required: true
     },
     unit : { 
       type: String, 
@@ -21,13 +25,9 @@ const pyqSchema = new mongoose.Schema(
     },
     subjectCode:{
       type: String, 
-      required: false
+      required: true
     },
     semester: { 
-      type: String, 
-      required: true 
-    },
-    keyword: { 
       type: String, 
       required: true 
     },
@@ -44,10 +44,11 @@ const pyqSchema = new mongoose.Schema(
       },
     ],
     exam:{
-      enum :[mst1,mst2.endsem]
+      type:String,
+      required:true
     },
     year:{
-      type:string,
+      type:String,  
       required:true
     }
   },
