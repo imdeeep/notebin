@@ -4,14 +4,11 @@ import { BASE_URL } from '@/constants/data';
 import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import { PlusIcon, XIcon } from 'lucide-react';
-import subjectCodes from '@/constants/subjectCodes';
 
 const UploadPYQ = ({ onUploadSuccess }) => {
   const [formData, setFormData] = useState({
     title: '',
     subject: '',
-    subjectCode: '',
-    unit: '',
     semester: '',
     examType: '',
     year: '',
@@ -23,8 +20,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
   const [existingTags, setExistingTags] = useState([]);
   const [tagSearchQuery, setTagSearchQuery] = useState('');
   const [showTagDropdown, setShowTagDropdown] = useState(false);
-  const [subjectCodeQuery, setSubjectCodeQuery] = useState('');
-  const [showSubjectCodeDropdown, setShowSubjectCodeDropdown] = useState(false);
 
   const examType = ['mst1', 'mst2', 'endsem'];
 
@@ -68,21 +63,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
     }
   };
 
-  // Handle subject code selection
-  const handleSubjectCodeSelect = (code) => {
-    setFormData({ ...formData, subjectCode: code });
-    setSubjectCodeQuery('');
-    setShowSubjectCodeDropdown(false);
-  };
-
-  // Handle custom subject code entry
-  const handleSubjectCodeCreate = () => {
-    const newCode = subjectCodeQuery.trim().toUpperCase();
-    if (!newCode) return;
-    setFormData({ ...formData, subjectCode: newCode });
-    setSubjectCodeQuery('');
-    setShowSubjectCodeDropdown(false);
-  };
 
   // Handle tag selection
   const handleTagSelect = (tag) => {
@@ -129,21 +109,17 @@ const UploadPYQ = ({ onUploadSuccess }) => {
     const {
       title,
       subject,
-      subjectCode,
       semester,
       tags,
       file,
-      unit,
       year,
       examType,
     } = formData;
     if (
       !title ||
       !subject ||
-      !subjectCode ||
       !semester ||
       !file ||
-      !unit ||
       !year ||
       !examType
     ) {
@@ -155,8 +131,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
     const formDataObj = new FormData();
     formDataObj.append('title', title);
     formDataObj.append('subject', subject);
-    formDataObj.append('subjectCode', subjectCode);
-    formDataObj.append('unit', unit);
     formDataObj.append('semester', semester);
     formDataObj.append('exam', examType);
     formDataObj.append('year', year);
@@ -182,9 +156,7 @@ const UploadPYQ = ({ onUploadSuccess }) => {
         setFormData({
           title: '',
           subject: '',
-          subjectCode: '',
           semester: '',
-          unit: '',
           tags: [],
           year: '',
           examType: '',
@@ -200,11 +172,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
       setLoading(false);
     }
   };
-
-  // Filter subject codes based on search query
-  const filteredSubjectCodes = subjectCodes.filter((code) =>
-    code.toLowerCase().includes(subjectCodeQuery.toLowerCase())
-  );
 
   // Filter tags
   const filteredTags = existingTags
@@ -228,74 +195,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
           name="subject"
           placeholder="Enter Subject"
           value={formData.subject}
-          onChange={handleChange}
-          className="outline-none rounded px-3 py-2 w-full max-w-md border border-primary"
-        />
-
-        {/* Subject Code Dropdown */}
-        <div className="w-full max-w-md">
-          <div className="relative">
-            <input
-              type="text"
-              value={subjectCodeQuery}
-              onChange={(e) => {
-                setSubjectCodeQuery(e.target.value);
-                setShowSubjectCodeDropdown(true);
-              }}
-              placeholder="Search or enter subject code"
-              className="outline-none rounded px-3  py-2 w-full border border-primary"
-              onFocus={() => setShowSubjectCodeDropdown(true)}
-              onBlur={() => {
-                setTimeout(() => setShowSubjectCodeDropdown(false), 200);
-              }}
-            />
-            {showSubjectCodeDropdown && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
-                {filteredSubjectCodes.length > 0 ? (
-                  <ul className="max-h-48 overflow-auto">
-                    {filteredSubjectCodes.map((code) => (
-                      <li
-                        key={code}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => handleSubjectCodeSelect(code)}
-                      >
-                        {code}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  subjectCodeQuery && (
-                    <div className="p-4">
-                      <p className="text-sm text-gray-600">
-                        No matching subject codes found
-                      </p>
-                      <button
-                        type="button"
-                        onClick={handleSubjectCodeCreate}
-                        className="mt-2 text-primary hover:text-primary/90"
-                      >
-                        Create &#34;{subjectCodeQuery.toUpperCase()}&#34;
-                      </button>
-                    </div>
-                  )
-                )}
-              </div>
-            )}
-          </div>
-          {formData.subjectCode && (
-            <div className="mt-1">
-              <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                {formData.subjectCode}
-              </span>
-            </div>
-          )}
-        </div>
-
-        <input
-          type="text"
-          name="unit"
-          placeholder="Enter unit of the PYQ"
-          value={formData.unit}
           onChange={handleChange}
           className="outline-none rounded px-3 py-2 w-full max-w-md border border-primary"
         />

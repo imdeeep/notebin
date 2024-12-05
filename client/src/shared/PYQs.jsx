@@ -47,8 +47,6 @@ const PYQs = () => {
     const fieldsToSearch = [
       note.title,
       note.subject,
-      note.subjectCode,
-      note.unit,
       note.year,
       note.semester,
       note.user?.name,
@@ -80,9 +78,6 @@ const PYQs = () => {
         result = result.filter((note) => {
           if (filter.id === 'semester') {
             return checkedOptions.includes(note.semester.toLowerCase());
-          }
-          if (filter.id === 'subjectcode') {
-            return checkedOptions.includes(note.subjectCode.toLowerCase());
           }
           if (filter.id === 'exam') {
             return checkedOptions.includes(note.exam.toLowerCase());
@@ -184,9 +179,7 @@ const PYQs = () => {
             <p>Subject: {note.subject}</p>
             <p>Exam: {note.exam}</p>
           </div>
-          <p>Subject Code: {note.subjectCode}</p>
           <div className="flex gap-4">
-            <p>Unit: {note.unit}</p>
             <p>Year: {note.year}</p>
           </div>
           {note.tags && note.tags.length > 0 && (

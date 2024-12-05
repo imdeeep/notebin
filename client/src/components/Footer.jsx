@@ -9,27 +9,6 @@ const Footer = () => {
           <div className="logo text-2xl text-center font-bold tracking-[1px] mb-4 md:mb-0">
             Notebin
           </div>
-          <nav className="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6">
-            <Link href="/" className="hover:text-gray-300 transition-colors">
-              Home
-            </Link>
-            <Link
-              href="/notes"
-              className="hover:text-gray-300 transition-colors"
-            >
-              Notes
-            </Link>
-            <Link href="#" className="hover:text-gray-300 transition-colors">
-              Help
-            </Link>
-            <Link
-              href="https://www.linkedin.com/in/mandeepyadav27/"
-              target="_blank"
-              className="hover:text-gray-300 transition-colors"
-            >
-              Contact
-            </Link>
-          </nav>
         </div>
         <div className="border-t border-zinc-600 py-4 text-sm text-center">
           <p>
