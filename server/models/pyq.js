@@ -15,17 +15,9 @@ const pyqSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    unit : { 
-      type: String, 
-      required: true 
-    },
     subject: { 
       type: String, 
       required: true 
-    },
-    subjectCode:{
-      type: String, 
-      required: true
     },
     semester: { 
       type: String, 
