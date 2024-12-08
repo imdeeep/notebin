@@ -63,7 +63,6 @@ const UploadPYQ = ({ onUploadSuccess }) => {
     }
   };
 
-
   // Handle tag selection
   const handleTagSelect = (tag) => {
     if (formData.tags.includes(tag)) {
@@ -106,23 +105,8 @@ const UploadPYQ = ({ onUploadSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      title,
-      subject,
-      semester,
-      tags,
-      file,
-      year,
-      examType,
-    } = formData;
-    if (
-      !title ||
-      !subject ||
-      !semester ||
-      !file ||
-      !year ||
-      !examType
-    ) {
+    const { title, subject, semester, tags, file, year, examType } = formData;
+    if (!title || !subject || !semester || !file || !year || !examType) {
       toast.error('Please fill all fields and select a file.');
       return;
     }
